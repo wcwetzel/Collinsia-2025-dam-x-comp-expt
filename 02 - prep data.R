@@ -65,7 +65,9 @@ d = dinit |>
 d$Date = as.Date(d$date, format='%m.%d.%Y')
 
 
-# Summarize to one row per plant ####
+# New dataframe with row per plant ####
+
+# Summarize
 dp = d |>
   group_by(id) |>
   summarize(
@@ -98,7 +100,7 @@ dp = d |>
       max(EFN_score, na.rm = TRUE)
   )
 
-
+# New variables
 
 
 
