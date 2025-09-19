@@ -7,8 +7,18 @@ library(ggplot2)
 
 
 
-# Define project root
+# Define project root ####
 i_am('02 - prep data.R')
+
+
+
+# Set up ggplot theme ####
+mytheme =
+  theme_bw() +
+  theme(axis.title = element_text(size=12),
+        legend.title = element_text(size=12),
+        panel.grid = element_blank(),
+        plot.subtitle = element_text(size=12, hjust = 0.5))
 
 
 
@@ -65,6 +75,11 @@ d = dinit |>
 d$Date = as.Date(d$date, format='%m.%d.%Y')
 
 
+# Remove plant ids that were not in initial
+d = d |>
+  filter(id %in% dinit$id) # just keep the initial plant ids
+
+
 # New dataframe with row per plant ####
 
 # Summarize
@@ -79,11 +94,18 @@ dp = d |>
     otherplant_cover = first(otherplant_cover),
     rock_cover = first(rock_cover),
     soilbareground_cover = first(soilbareground_cover),
+    height_cm_init = first(height_cm),
+    leaf_count_init = first(leaf_count),
+    flower_count_init = first(flower_count),
+    fruit_count_init = first(fruit_count),
+    last_alive_date = {
+      alive_dates <- date[alive == 1]
+      if(length(alive_dates) == 0) NA else max(alive_dates)
+    },
     first_dead_date = {
       dead_dates <- date[alive == 0]
       if(length(dead_dates) == 0) NA else min(dead_dates)
     },
-    height_cm_init = first(height_cm),
     height_cm_mean = mean(height_cm, na.rm=TRUE),
     height_cm_max = max(height_cm, na.rm=TRUE),
     # diameter_cm_init = first(diameter_cm),
@@ -102,10 +124,12 @@ dp = d |>
 
 # New variables
 
+dp$damage_prop = dp$damage / 100
+dp$damage_prop_centered = dp$damage_prop - 0.5
 
+dp$height_cm_init_scale = scale(dp$height_cm_init)
 
-
-
+dp$leaf_area = dp$height_cm_max * dp$diameter_cm_max
 
 
 
