@@ -25,3 +25,10 @@ d2 = read_excel(here('data', 'Moser creek data.xlsx'),
 d3 = read_excel(here('data', 'Moser creek data.xlsx'),
                 sheet = 'Follow up Data')
 
+# Fix column classes
+
+class(d2$notes) = 'character'
+class(d3$height_cm) = 'numeric'
+
+
+
