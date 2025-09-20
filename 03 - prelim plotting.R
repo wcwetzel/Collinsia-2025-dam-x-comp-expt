@@ -130,7 +130,15 @@ ggplot(dp, aes(competition, last_alive_date)) +
 
 
 
+ggplot(data=dp, aes(damage, height_diff, group=competition, color=competition)) +
+  geom_jitter(width=1, height=0.1, alpha=0.6) + 
+  geom_smooth(method='gam', formula = y ~ s(x, k=4)) +
+  mytheme
 
+ggplot(data=dp, aes(damage, height_rate, group=competition, color=competition)) +
+  geom_jitter(width=1, height=0.1, alpha=0.6) + 
+  geom_smooth(method='gam', formula = y ~ s(x, k=4)) +
+  mytheme
 
 
 
