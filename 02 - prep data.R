@@ -124,14 +124,15 @@ dp = d |>
 
 # New variables
 
-dp$damage_prop = dp$damage / 100
-dp$damage_prop_centered = dp$damage_prop - 0.5
-
-dp$height_cm_init_scale = scale(dp$height_cm_init)
-
-dp$leaf_area = dp$height_cm_max * dp$diameter_cm_max
-
-
+dp = dp |>
+  mutate(
+    damage_prop = damage / 100,
+    damage_prop_centered = damage_prop - 0.5,
+    height_cm_init_scale = scale(height_cm_init),
+    leaf_area = height_cm_max * diameter_cm_max,
+    height_diff = height_cm_max - height_cm_init,
+    height_rate = log(height_cm_max / height_cm_init)
+  )
 
 
 
