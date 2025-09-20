@@ -59,6 +59,8 @@ dtrt = d1 |>
   )
 class(dtrt$damage) = 'numeric'
 
+dtrt$competition[dtrt$competition == 'C'] = 'Control'
+dtrt$competition[dtrt$competition == 'T'] = 'Reduced'
 
 
 # Dataframe for initial data only ####
