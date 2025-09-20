@@ -7,12 +7,12 @@ library(ggnewscale)
 
 
 
-m = brm(height_cm_max ~ s(damage_prop, by=competition, k=4) +
+m = brm(height_cm_max ~ s(damage_prop, by=competition, bs='tp', k=4) +
           height_cm_init,
-                 data=dp,
-                 family=lognormal(),
-                 chains = 12, cores = 12, iter = 1200, backend = "cmdstanr",
-                 control=list(adapt_delta=0.995))
+          data=dp,
+          family=lognormal(),
+          chains = 8, cores = 8, iter = 1200, backend = "cmdstanr",
+          control=list(adapt_delta=0.995))
 
 m
 
@@ -46,22 +46,17 @@ m.effects_plot1 = ggplot(data=m.effects, aes(x=damage_prop, y=estimate__, color=
        y='Plant height (cm)') +
   mytheme +
   annotate("text",
-           label=bquote(italic(R)^2 == .(m.R2) * "%"),
-           x=0, y=1.2,
-           hjust = 0, vjust = 0) + scale_y_log10()
-
-m.effects_plot2$layers = rev(m.effects_plot2$layers) # reverse layers
-
-Collinsia.prelim.fig = m.effects_plot2
-
-Collinsia.prelim.fig
-
-
+           label=bquote(italic(R)^2 == .(m.r2) * "%"),
+           x=1, y=5.8,
+           hjust = 1, vjust = 1) +
+  theme(legend.position = 'inside',
+        legend.position.inside = c(0.2,0.01),
+        legend.justification = c("left", "bottom"))
 
 # Export plot as a pdf ####
-ggsave('Collinsia.field.prelim.fig.pdf',
-       Collinsia.prelim.fig,
-       width = 3.5,
+ggsave('CompXDamPrelimFig.pdf',
+       m.effects_plot1,
+       width = 2.5,
        height = 3.25,
        units='in',
        dpi=600)
