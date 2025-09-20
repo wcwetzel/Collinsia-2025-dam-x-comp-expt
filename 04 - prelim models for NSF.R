@@ -43,7 +43,7 @@ m.effects_plot1 = ggplot(data=m.effects, aes(x=damage_prop, y=estimate__, color=
                         end=0.9) +
   scale_fill_viridis_d(direction=-1, name='Competition', option='C', end=0.85) +
   labs(x='Leaf area removed (prop.)',
-       y='Plant height (cm)') +
+       y='Plant growth (cm)') +
   mytheme +
   annotate("text",
            label=bquote(italic(R)^2 == .(m.r2) * "%"),
