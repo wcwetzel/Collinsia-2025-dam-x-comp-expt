@@ -39,9 +39,9 @@ m.effects_plot1 = ggplot(data=m.effects, aes(x=damage_prop, y=estimate__, color=
   geom_line(linewidth=1.25, show.legend=TRUE) +
   geom_ribbon(aes(ymin=lower__, ymax=upper__, fill=effect2__), alpha=0.25,
               color=NA, show.legend=TRUE) +
-  scale_color_viridis_d(direction=-1, name='Competition', option='C',
+  scale_color_viridis_d(direction=1, name='Competition', option='C',
                         end=0.9) +
-  scale_fill_viridis_d(direction=-1, name='Competition', option='C', end=0.85) +
+  scale_fill_viridis_d(direction=1, name='Competition', option='C', end=0.85) +
   labs(x='Leaf area removed (prop.)',
        y='Plant growth (cm)') +
   mytheme +
